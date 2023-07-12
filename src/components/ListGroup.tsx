@@ -1,10 +1,15 @@
+import { useState } from "react";
+
 function ListGroup() {
   let items = [
-    'Spearo Thermometer',
+    'Thermometer',
     'Humidity',
     'GPS',
     'Accelerometer'
   ]
+
+  // Hook
+  const [selectedIndex, setSelectedIndex] = useState(-1) ;
 
   return (
     <>
@@ -13,9 +18,14 @@ function ListGroup() {
 
       <div className="list-group">
         {items.map((item, index) => (
-          <a href="#" className="list-group-item"
+          <a href="#" className={
+          selectedIndex === index ?
+                'list-group-item active' :
+                'list-group-item'
+          }
              key={item}
-             onClick={(event) => console.log(index, item, event) }>
+             onClick={ () => { setSelectedIndex(index); }  }
+          >
             {item}
           </a> 
         ))}
