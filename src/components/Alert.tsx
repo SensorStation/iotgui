@@ -1,13 +1,16 @@
 interface Props {
   children: ReactNode;
+  onClose: () => void;
 }
 
-function Alert({children} : Props) {
+function Alert({children, onClose} : Props) {
 
   return (
     <>
-      <h1>Details</h1>
-      <div className="alert alert-primary" role="alert">{children}</div>
+      <div className="alert alert-primary alert-dismissible" role="alert">
+        {children}
+        <button type="button" className="btn-close" data-bs-dismiss="alert" onClick={onClose} />
+      </div>
     </>
   )
 }
