@@ -1,4 +1,4 @@
-interface Props {
+Interface Props {
   children: ReactNode;
   onClose: () => void;
 }
