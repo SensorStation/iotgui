@@ -3,12 +3,12 @@ interface Props {
   value: float
 }
 
-function Sensor({sensor, value} : Props) {
+function Sensor({id, value} : Props) {
 
   return (
     <div className="sensor">
       <h1>Sensor Detail</h1>
-      {sensor} : {value}
+      {id} : {value}
     </div>
   )
 }
