@@ -4,17 +4,12 @@ import useWebSocket, { ReadyState } from 'react-use-websocket';
 import Station from "./components/Station";
 import ListGroup from "./components/ListGroup";
 
-/* let stations = [
- *   { id: 1, name: 'Station 1' },
- *   { id: 2, name: 'Station 2' },
- *   { id: 3, name: 'Station 3' }
- * ]
- *  */
-let stations = [
-  "Station1",
-  "Station2",
-  "Station3"
-]
+const stationState = {
+  id: "",
+  tempc: 0.0,
+  humidity: 0,
+  lastHeard: "",
+};
 
 export const WebSocketDemo = () => {
   //Public API that will echo messages sent to it back to the client
@@ -23,18 +18,16 @@ export const WebSocketDemo = () => {
   const [payload, setPayload] = useState([]);
 
   const { sendMessage, lastJsonMessage, readyState } = useWebSocket(socketUrl);
+
   useEffect(() => {
     if (lastJsonMessage !== null) {
 
       const { channels, ...p } = lastJsonMessage;
       setPayload(p);
       console.log(p);
-      /* console.log(channels);
-       * console.log(payload);             // the entire message
-       * console.log(payload.source);      // just the source
-       */
-      // setMessageHistory((prev) => prev.concat(lastJsonMessage));
-      // console.log(payload);
+
+      stations[p.source] = p;
+
       // setMessageHistory((prev) => prev.concat(payload));
       // setMessageHistory(payload);
     }
