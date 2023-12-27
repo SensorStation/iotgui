@@ -1,103 +1,15 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import useWebSocket, { ReadyState } from 'react-use-websocket';
+import './App.css'
 
-import Station from "./components/Station";
-import ListGroup from "./components/ListGroup";
-
-const stationState = {
-  id: "",
-  tempc: 0.0,
-  humidity: 0,
-  lastHeard: "",
-};
-
-export const WebSocketDemo = () => {
-  //Public API that will echo messages sent to it back to the client
-  // const [socketUrl, setSocketUrl] = useState('wss://echo.websocket.org');
-  const [socketUrl, setSocketUrl] = useState('ws://localhost:8011/ws');
-  const [payload, setPayload] = useState([]);
-
-  const { sendMessage, lastJsonMessage, readyState } = useWebSocket(socketUrl);
-
-  useEffect(() => {
-    if (lastJsonMessage !== null) {
-
-      const { channels, ...p } = lastJsonMessage;
-      setPayload(p);
-      console.log(p);
-
-      stations[p.source] = p;
-
-      // setMessageHistory((prev) => prev.concat(payload));
-      // setMessageHistory(payload);
-    }
-  }, [lastJsonMessage, setPayload]);
-
-  const handleClickChangeSocketUrl = useCallback(
-    // () => setSocketUrl('wss://demos.kaazing.com/echo'),
-    () => setSocketUrl('ws://localhost:8011/ws'),
-    []
-  );
-
-  const handleClickSendMessage = useCallback(() => sendMessage('Hello'), []);
-
-  const connectionStatus = {
-    [ReadyState.CONNECTING]: 'Connecting',
-    [ReadyState.OPEN]: 'Open',
-    [ReadyState.CLOSING]: 'Closing',
-    [ReadyState.CLOSED]: 'Closed',
-    [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
-  }[readyState];
-
-  return (
-    <div>
-      <button onClick={handleClickChangeSocketUrl}>
-        Click Me to change Socket Url
-      </button>
-
-      <button
-        onClick={handleClickSendMessage}
-        disabled={readyState !== ReadyState.OPEN}
-    >
-    Click Me to send 'Hello'
-      </button>
-
-      <span>The WebSocket is currently {connectionStatus}</span>
-
-      <ul>
-        {payload.source} = {payload.device} = {payload.value}
-      </ul>
-    </div>
-  );
-};
-
+import Navbar from './components/Navbar'
+import StationFrame from './components/StationFrame'
 
 function App() {
 
-  const handleSelectItem = (station: string) => {
-    console.log(station);
-    setActiveStation(station);
-  }
-
-  const [activeStation, setActiveStation] = useState(-1);
-
   return (
-    <div className="container p-4">
-      <div className="row">
-
-        <div className="col-4">
-          <ListGroup items={stations} heading="Stations" onSelectItem={handleSelectItem} />
-        </div>
-
-        <div className="col">
-
-          <Station station={activeStation} />
-          <WebSocketDemo />
-
-        </div>
-
-      </div>
-    </div>
+    <>
+      <Navbar />
+      <StationFrame />
+    </>
   )
 }
 
