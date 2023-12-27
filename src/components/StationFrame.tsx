@@ -1,26 +1,28 @@
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import useWebSocket, { ReadyState } from 'react-use-websocket';
 
 import StationList from './StationList'
 import StationMeta from './StationMeta'
 import StationDash from './StationDash'
 import StationCard from './StationCard'
 
+/*
 let stationData = {
-    "sta1": {
-      "id": "sta1",
-      "devices": { "tempc": 21.1, "humidity": .71, },
-      "controls": [ { "relay0": 0 , "relay1": 0, "relay2": 0, "relay3": 0 } ]
-    },
-    "sta2": {
-      "id": "sta2",
-      "devices": { "tempc": 22.2, "humidity": .72, },
-      "controls": [{ "relay0": 1, "relay1": 1, "relay2": 1, "relay3": 1 }]
-    },
-    "sta3": {
-      "id": "sta3",
-      "devices": { "tempc": 23.3, "humidity": .73, },
-      "controls": [{ "relay0": 0, "relay1": 1, "relay2": 0, "relay3": 1 }]
-    }
+  "sta1": {
+    "id": "sta1",
+    "devices": { "tempc": 21.1, "humidity": .71, },
+    "controls": [ { "relay0": 0 , "relay1": 0, "relay2": 0, "relay3": 0 } ]
+  },
+  "sta2": {
+    "id": "sta2",
+    "devices": { "tempc": 22.2, "humidity": .72, },
+    "controls": [{ "relay0": 1, "relay1": 1, "relay2": 1, "relay3": 1 }]
+  },
+  "sta3": {
+    "id": "sta3",
+    "devices": { "tempc": 23.3, "humidity": .73, },
+    "controls": [{ "relay0": 0, "relay1": 1, "relay2": 0, "relay3": 1 }]
+  }
 };
 
 
@@ -37,11 +39,20 @@ function updateStations() {
   }
   return stationList;
 }
+*/
 
 function StationFrame() {
-  const [stations, setStations] = useState(new Array());
+  const [socketUrl, setSocketUrl] = useState('ws://localhost:8011/ws');
+  const [messageHistory, setMessageHistory] = useState([]);
 
-  let stationList=updateStations(setStations);
+  const { sendMessage, lastJsonMessage, readyState } = useWebSocket(socketUrl);
+
+  useEffect(() => {
+    if (lastJsonMessage !== null) {
+      setMessageHistory((prev) => prev.concat(lastJsonMessage));
+      console.log(lastJsonMessage);
+    }
+  }, [lastJsonMessage, setMessageHistory]);
 
   return (
     <div className="contianer p-4">
@@ -53,7 +64,7 @@ function StationFrame() {
         </div>
 
         <div className="col-8">
-          <StationDash stations={stationList} />
+          <StationDash  />
         </div>
       </div>
     </div>    
