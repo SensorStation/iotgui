@@ -1,5 +1,9 @@
 .temp {
-  font-size: 4em;
+  font-size: 3em;
+}
+
+.temp-type {
+    font-size: 1.2em;
 }
 
 .humidity {

@@ -2,11 +2,14 @@ import StationCard from './StationCard'
 
 function StationDash({ stations }) {
 
-  const cardList = stations.map(station => 
-    <div className="col-4 p-2" key={station.id} >
-      <StationCard station={station} />
-    </div>
-  );
+  let cardList = new Array();
+  for (let idx in stations) {
+    cardList = cardList.concat(
+      <div className="col-4 p-2" key={idx} >
+        <StationCard station={stations[idx]} />
+      </div>
+    );
+  }
 
   return (
     <div className="container">
