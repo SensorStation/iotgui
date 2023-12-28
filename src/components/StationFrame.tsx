@@ -4,27 +4,6 @@ import useWebSocket, { ReadyState } from 'react-use-websocket';
 import StationList from './StationList'
 import StationMeta from './StationMeta'
 import StationDash from './StationDash'
-import StationCard from './StationCard'
-
-/*
-let stationData = {
-  "sta1": {
-    "id": "sta1",
-    "devices": { "tempc": 21.1, "humidity": .71, },
-    "controls": [ { "relay0": 0 , "relay1": 0, "relay2": 0, "relay3": 0 } ]
-  },
-  "sta2": {
-    "id": "sta2",
-    "devices": { "tempc": 22.2, "humidity": .72, },
-    "controls": [{ "relay0": 1, "relay1": 1, "relay2": 1, "relay3": 1 }]
-  },
-  "sta3": {
-    "id": "sta3",
-    "devices": { "tempc": 23.3, "humidity": .73, },
-    "controls": [{ "relay0": 0, "relay1": 1, "relay2": 0, "relay3": 1 }]
-  }
-};
-
 
 function updateStations() {
   let stationList = new Array();
@@ -39,20 +18,17 @@ function updateStations() {
   }
   return stationList;
 }
-*/
 
 function StationFrame() {
   const [socketUrl, setSocketUrl] = useState('ws://localhost:8011/ws');
-  const [messageHistory, setMessageHistory] = useState([]);
-
   const { sendMessage, lastJsonMessage, readyState } = useWebSocket(socketUrl);
+  const [stationList, setStationList] = useState([]);
 
   useEffect(() => {
     if (lastJsonMessage !== null) {
-      setMessageHistory((prev) => prev.concat(lastJsonMessage));
-      console.log(lastJsonMessage);
+      setStationList([lastJsonMessage]);
     }
-  }, [lastJsonMessage, setMessageHistory]);
+  }, [lastJsonMessage, setStationList]);
 
   return (
     <div className="contianer p-4">
@@ -64,7 +40,7 @@ function StationFrame() {
         </div>
 
         <div className="col-8">
-          <StationDash  />
+          <StationDash stations={stationList} />
         </div>
       </div>
     </div>    
