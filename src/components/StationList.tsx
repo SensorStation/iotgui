@@ -1,22 +1,27 @@
 import { useState } from 'react';
 
-function StationList() {
+import StationMeta from './StationMeta';
 
-  const [stations, setStations] = useState(
-    ["sta1", "sta2", "sta3", "sta4"]
-  );
-  
-  const stationsList = stations.map(station => 
-    <a className="list-group-item" key={station}>
-      {station}
-    </a>
-  );
+function StationList({stations}) {
+
+  let slist = new Array();
+  for (let station in stations) {
+    slist = slist.concat(
+      <a className="list-group-item" key={station}>
+        {station}
+      </a>
+    );
+  }
 
   return (
     <>
       <h2>Station List</h2>
       <div className="list-group">
-        {stationsList}
+        {slist}
+      </div>
+
+      <div className="station-meta">
+        <StationMeta />
       </div>
     </>
   );
