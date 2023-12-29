@@ -9,6 +9,7 @@ function StationFrame() {
   const [socketUrl, setSocketUrl] = useState('ws://localhost:8011/ws');
   const { sendMessage, lastJsonMessage, readyState } = useWebSocket(socketUrl);
   const [stations, setStations] = useState([]);
+  const [currentStation, setCurrentStation] = useState([]);
 
   useEffect(() => {
     if (lastJsonMessage === null) {
@@ -25,11 +26,11 @@ function StationFrame() {
       <div className="row">
 
         <div className="col">
-          <StationList stations={stations} />
+          <StationList stations={stations} currentStation={currentStation} setCurrentStation={setCurrentStation} />
         </div>
 
         <div className="col-8">
-          <StationDash stations={stations} />          
+          <StationDash stations={stations} currentStation={currentStation} />          
         </div>
       </div>
     </div>    

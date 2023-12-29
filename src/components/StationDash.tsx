@@ -1,6 +1,6 @@
 import StationCard from './StationCard'
 
-function StationDash({ stations }) {
+function StationDash({ stations, currentStation }) {
 
   let cardList = new Array();
   for (let idx in stations) {
