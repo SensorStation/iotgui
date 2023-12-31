@@ -28,7 +28,6 @@ function StationList({stations, currentStation, setCurrentStation}) {
       <div className="station-meta">
         <StationMeta station={currentStation} /> 
       </div>
-
     </>
   );
 }
