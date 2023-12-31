@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import StationMeta from './StationMeta';
 
 function StationList({stations, currentStation, setCurrentStation}) {

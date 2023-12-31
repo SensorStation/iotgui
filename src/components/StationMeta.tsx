@@ -5,7 +5,7 @@ function StationMeta({ station }) {
   }
 
   let sensors = Object.keys(station.sensors).join(', ');
-  let dstring = (new Date(station["last-heard"]) - new Date()) * 0.001;
+  let dstring = new Date(station["last-heard"]).toString();
 
   return (
     <>

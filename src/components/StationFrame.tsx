@@ -7,12 +7,17 @@ import StationDash from './StationDash'
 
 function StationFrame() {
   const [socketUrl, setSocketUrl] = useState('ws://localhost:8011/ws');
-  const { sendMessage, lastJsonMessage, readyState } = useWebSocket(socketUrl);
+  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(socketUrl, {
+    shouldReconnect: () => true,
+  });
   const [stations, setStations] = useState([]);
   const [currentStation, setCurrentStation] = useState([]);
 
   useEffect(() => {
     if (lastJsonMessage === null) {
+      return;
+    }
+    if (lastJsonMessage.id === undefined) {
       return;
     }
 
@@ -30,7 +35,7 @@ function StationFrame() {
         </div>
 
         <div className="col-8">
-          <StationDash stations={stations} currentStation={currentStation} />          
+          <StationDash stations={stations} currentStation={currentStation} sendJsonMessage={sendJsonMessage} />
         </div>
       </div>
     </div>    
