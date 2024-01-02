@@ -8,8 +8,6 @@ function StationMeta({ station }) {
   let relays  = Object.keys(station.relays).join(', ');
   let dstring = new Date(station["last-heard"]).toString();
 
-  console.log(Object.keys(station.relays).join(', '));
-
   return (
     <>
       <h2 className="pt-4 m-4">Station Details</h2>
