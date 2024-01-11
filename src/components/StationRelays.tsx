@@ -36,6 +36,7 @@ function Relay({ idx, stationid, sendJsonMessage }) {
       onChecked = undefined;
       offChecked = "checked";
     }
+    console.log("Send station: ", stationid);
     sendJsonMessage({ "type": "relay", "device": relayid, "stationid": stationid, "value": on });
   }
 
