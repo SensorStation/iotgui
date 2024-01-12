@@ -22,57 +22,56 @@ function Relay({ idx, stationid, sendJsonMessage }) {
   let onChecked="checked";
   let offChecked="checked";
 
+  function handleChange(e) {}
+
   function handleClick(e) {
     e.preventDefault();
     let id = e.target.id;
     let stationid = e.target.getAttribute("stationid");
-    let relayid = e.target.getAttribute("relayid")
-
-    let on = true;
+    let relayid = e.target.getAttribute("relayid");
+    let name = e.target.name;
     let onChecked = "checked";
     let offChecked = "";
-    if (id == "off") {
-      on = false;
+    if (name == "off") {
       onChecked = undefined;
       offChecked = "checked";
     }
-    console.log("Send station: ", stationid);
-    sendJsonMessage({ "type": "relay", "device": relayid, "stationid": stationid, "value": on });
+    console.log("Send station: ", stationid, "-", relayid, " - ", name);
+    sendJsonMessage({ "type": "relay", "device": relayid, "stationid": stationid, "value": name });
   }
-
-  function handleChange(e) {}
+  let onidx = idx+"-on"
+  let offidx = idx+"-off"
 
   return (
     <>
       <h5 className="btn label">{idx}</h5>
       <input
-        id="on"
+        id={onidx}
         relayid={idx}
         stationid={stationid}
         type="radio"
-        className="btn-check"
-        name="btnonoff"
-        autoComplete="off"
+        className="on btn-check"
+        name="on"
+        autoComplete="on"
         onClick={handleClick}
         onChange ={handleChange}
         ischecked={onChecked}
       />
-      <label className="btn btn-outline-primary" htmlFor="on">On</label>
+      <label className="btn btn-outline-primary" htmlFor={onidx}>On</label>
 
       <input
-        id="off"
+        id={offidx}
         relayid={idx}
         stationid={stationid}
         type="radio"
-        className="btn-check"
-        name="btnonoff"
+        className="off btn-check"
+        name="off"
         autoComplete="off"
         onClick={handleClick}
         onChange={handleChange}
         checked={offChecked}
       />
-      <label className="btn btn-outline-primary" htmlFor="off">Off</label>
-
+      <label className="btn btn-outline-primary" htmlFor={offidx}>Off</label>
     </>
   )
 }
