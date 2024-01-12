@@ -4,6 +4,7 @@ import useWebSocket, { ReadyState } from 'react-use-websocket';
 import StationList from './StationList'
 import StationMeta from './StationMeta'
 import StationDash from './StationDash'
+import StationsContext from './stations'
 
 function StationFrame() {
   const [socketUrl, setSocketUrl] = useState('ws://localhost:8011/ws');
@@ -29,16 +30,15 @@ function StationFrame() {
   return (
     <div className="contianer p-4">
       <div className="row">
+        <StationsContext.Provider value={{stations, currentStation}}>
+          <div className="col">
+            <StationList setCurrentStation={setCurrentStation} />
+          </div>
 
-        <div className="col">
-
-          <StationList stations={stations} currentStation={currentStation} setCurrentStation={setCurrentStation} />
-        </div>
-
-        <div className="col-8">
-          <StationDash stations={stations} currentStation={currentStation} sendJsonMessage={sendJsonMessage} />
-
-        </div>
+          <div className="col-8">
+            <StationDash sendJsonMessage={sendJsonMessage} />
+          </div>
+        </StationsContext.Provider>
       </div>
     </div>    
   );

@@ -1,6 +1,13 @@
+import { useContext } from 'react';
+
+import StationsContext from './stations';
 import StationMeta from './StationMeta';
 
-function StationList({stations, currentStation, setCurrentStation}) {
+function StationList({setCurrentStation}) {
+
+  const stationInfo = useContext(StationsContext);
+  const stations = stationInfo.stations;
+  const currentStation = stationInfo.currentStation;
 
   function handleClick(e) {
     e.preventDefault();

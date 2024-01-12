@@ -1,6 +1,13 @@
-import StationCard from './StationCard'
+import { useContext } from 'react';
 
-function StationDash({ stations, currentStation, sendJsonMessage }) {
+import StationCard from './StationCard'
+import StationsContext from './stations'
+
+function StationDash({ sendJsonMessage }) {
+
+  const stationInfo = useContext(StationsContext);
+  const stations = stationInfo.stations;
+  const currentStation = stationInfo.currentStation;
 
   let cardList = new Array();
   for (let idx in stations) {

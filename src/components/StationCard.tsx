@@ -1,16 +1,7 @@
 import StationRelays from "./StationRelays";
+import StationsContext from './stations';
 
 function StationCard({ station, currentStation, sendJsonMessage }) {
-
-  let temp = 0;
-  let ttype = "";
-  if (station.sensors.tempf) {
-    temp = station.sensors.tempf;
-    ttype = "f";
-  } else {
-    temp = station.sensors.tempc;
-    ttype = "c";
-  }
 
   let temp = 0;
   let ttype = "";
