@@ -31,11 +31,13 @@ function StationFrame() {
       <div className="row">
 
         <div className="col">
+
           <StationList stations={stations} currentStation={currentStation} setCurrentStation={setCurrentStation} />
         </div>
 
         <div className="col-8">
           <StationDash stations={stations} currentStation={currentStation} sendJsonMessage={sendJsonMessage} />
+
         </div>
       </div>
     </div>    
