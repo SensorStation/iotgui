@@ -4,15 +4,15 @@ function StationRelays( { station, sendJsonMessage } ) {
   for (let idx in station.relays) {
     let val = station.relays[idx];
     relays.push(
-      <Relay id={idx} key={idx} idx={idx} stationid={station.id} value={val} sendJsonMessage={sendJsonMessage} />
+      <div key={idx} className="btn-group m-2" role="group" aria-label="Basic radio toggle button group">
+        <Relay id={idx} key={idx} idx={idx} stationid={station.id} value={val} sendJsonMessage={sendJsonMessage} />
+      </div>
     );
   }
 
   return (
     <>
-      <div className="btn-group m-2" role="group" aria-label="Basic radio toggle button group">
-        {relays}
-      </div>
+      {relays}
     </>
   )
 }
@@ -36,7 +36,6 @@ function Relay({ idx, stationid, sendJsonMessage }) {
       onChecked = undefined;
       offChecked = "checked";
     }
-    console.log("Send station: ", stationid, "-", relayid, " - ", name);
     sendJsonMessage({ "type": "relay", "device": relayid, "stationid": stationid, "value": name });
   }
   let onidx = idx+"-on"
